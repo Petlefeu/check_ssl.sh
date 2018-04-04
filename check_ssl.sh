@@ -5,7 +5,7 @@ VERT="\\033[1;32m"
 NORMAL="\\033[0;39m"
 ROUGE="\\033[1;31m"
 JAUNE="\\033[1;33m"
-VERSION=1.1.0
+VERSION=1.2.0
 
 MAIN_HTTP_METHODS='
 GET
@@ -98,9 +98,9 @@ for http in ${MAIN_HTTP_METHODS}
 do
     RET=$(curl -ks https://"${FQDN_SERVER}"/ -I -X "${http}" | head -1 | grep 200)
     if [ -n "${RET}" ]; then
-        echo -e "${JAUNE}HTTP Method : ${http}  ${VERT}joignable (OK)${NORMAL}"
+        echo -e "${JAUNE}HTTP Method : ${http}  ${VERT}enable (OK)${NORMAL}"
     else
-        echo -e "${JAUNE}HTTP Method : ${http}  ${VERT}injoignable (OK)${NORMAL}"
+        echo -e "${JAUNE}HTTP Method : ${http}  ${VERT}disable (OK)${NORMAL}"
     fi
 done
 
@@ -108,7 +108,7 @@ for http in ${OPTIONAL_HTTP_METHODS}
 do
     RET=$(curl -ks https://"${FQDN_SERVER}"/ -I -X "${http}" | head -1 | grep 200)
     if [ -z "${RET}" ]; then
-        echo -e "${JAUNE}HTTP Method : ${http}  ${VERT}injoignable (OK)${NORMAL}"
+        echo -e "${JAUNE}HTTP Method : ${http}  ${VERT}disable (OK)${NORMAL}"
     else
         echo -e "${JAUNE}HTTP Method : ${http}  ${ROUGE}NOT ok${NORMAL}, ${RET}"
     fi
