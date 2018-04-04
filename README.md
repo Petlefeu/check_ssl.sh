@@ -20,5 +20,7 @@ This script can check the SSL/TLS parameters of a web server.
 	HTTP Method : DELETE  injoignable (OK)
 	HTTP Method : PUT  injoignable (OK)
 	HTTP Method : CONNECT  injoignable (OK)
+	HTTP Method : TRACE  injoignable (OK)
 	HTTP Method : TRACK  injoignable (OK)
 	HTTP Method : CUSTOM  injoignable (OK)
+
