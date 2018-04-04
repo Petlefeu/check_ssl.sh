@@ -56,6 +56,7 @@ done
 
 trap 'rm -f "${TMP_HEAD}"' EXIT
 
+touch $TMP_HEAD
 curl https://"${FQDN_SERVER}"/ -ks -I -o $TMP_HEAD
 
 # HSTS
@@ -96,7 +97,7 @@ fi
 
 for http in ${MAIN_HTTP_METHODS}
 do
-    RET=$(curl -ks https://"${FQDN_SERVER}"/ -I -X "${http}" | head -1 | grep 200)
+    RET=$(curl -ks https://"${FQDN_SERVER}"/ -I -X "${http}" --max-time 10 --connect-timeout 10 | head -1 | grep '200\|301')
     if [ -n "${RET}" ]; then
         echo -e "${JAUNE}HTTP Method : ${http}  ${VERT}enable (OK)${NORMAL}"
     else
@@ -106,7 +107,7 @@ done
 
 for http in ${OPTIONAL_HTTP_METHODS}
 do
-    RET=$(curl -ks https://"${FQDN_SERVER}"/ -I -X "${http}" | head -1 | grep 200)
+    RET=$(curl -ks https://"${FQDN_SERVER}"/ -I -X "${http}" --max-time 10 --connect-timeout 10 | head -1 | grep '200\|301')
     if [ -z "${RET}" ]; then
         echo -e "${JAUNE}HTTP Method : ${http}  ${VERT}disable (OK)${NORMAL}"
     else
