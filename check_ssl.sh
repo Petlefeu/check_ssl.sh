@@ -5,7 +5,7 @@ VERT="\\033[1;32m"
 NORMAL="\\033[0;39m"
 ROUGE="\\033[1;31m"
 JAUNE="\\033[1;33m"
-VERSION=1.2.0
+VERSION=1.2.1
 
 MAIN_HTTP_METHODS='
 GET
@@ -97,7 +97,7 @@ fi
 
 for http in ${MAIN_HTTP_METHODS}
 do
-    RET=$(curl -ks https://"${FQDN_SERVER}"/ -I -X "${http}" --max-time 10 --connect-timeout 10 | head -1 | grep '200\|301')
+    RET=$(curl -ks https://"${FQDN_SERVER}"/ -I -X "${http}" --max-time 10 --connect-timeout 10 -A "check_ssl.sh/${VERSION}" | head -1 | grep '200\|301')
     if [ -n "${RET}" ]; then
         echo -e "${JAUNE}HTTP Method : ${http}  ${VERT}enable (OK)${NORMAL}"
     else
@@ -107,7 +107,7 @@ done
 
 for http in ${OPTIONAL_HTTP_METHODS}
 do
-    RET=$(curl -ks https://"${FQDN_SERVER}"/ -I -X "${http}" --max-time 10 --connect-timeout 10 | head -1 | grep '200\|301')
+    RET=$(curl -ks https://"${FQDN_SERVER}"/ -I -X "${http}" --max-time 10 --connect-timeout 10 -A "check_ssl.sh/${VERSION}" | head -1 | grep '200\|301')
     if [ -z "${RET}" ]; then
         echo -e "${JAUNE}HTTP Method : ${http}  ${VERT}disable (OK)${NORMAL}"
     else
